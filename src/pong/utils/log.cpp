@@ -1,5 +1,4 @@
 #include "log.h"
-#include "app/common.h"
 
 #include <stdio.h>
 #include <stdarg.h>
@@ -86,7 +85,7 @@ void write_log(int level, const char* fmt, ...)
 	printf(log_str.c_str());
 	/* Reset back the color */
 	WIN32_RESET_COLOR(hConsole);
-	log_str = "]: ";
+	log_str = "] ";
 
 	va_list args;
 	va_start(args, fmt);
@@ -118,17 +117,17 @@ void write_log(int level, const char* fmt, ...)
 	{
 		case Consts::LEVEL_ERROR:
 		{
-			log_str.append("[" COLOR_ERR "ERROR" COLOR_STOP "]: ");
+			log_str.append("[" COLOR_ERR "ERROR" COLOR_STOP "] ");
 			break;
 		}
 		case Consts::LEVEL_INFO:
 		{
-			log_str.append("[" COLOR_INFO "INFO" COLOR_STOP "]: ");
+			log_str.append("[" COLOR_INFO "INFO" COLOR_STOP "] ");
 			break;
 		}
 		case Consts::LEVEL_DEBUG:
 		{
-			log_str.append("[" COLOR_DEBUG "DEBUG" COLOR_STOP "]: ");
+			log_str.append("[" COLOR_DEBUG "DEBUG" COLOR_STOP "] ");
 			break;
 		}
 	}
