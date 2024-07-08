@@ -54,4 +54,5 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 link_directories(${OUTPUT_LIB_DIR})
 
 add_subdirectory(${EXTERNAL_DIR}/glfw)
+add_subdirectory(${EXTERNAL_DIR}/glm)
 add_subdirectory(src)

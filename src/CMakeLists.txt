@@ -17,7 +17,7 @@ endif()
 
 add_library(GLAD ${LIB_GLAD_PATH})
 
-set(COMMON_LIBS glfw3 GLAD)
+set(COMMON_LIBS glfw3 GLAD glm)
 if(UNIX)
 	set(OS_LIBS pthread dl)
 else()
