@@ -15,7 +15,7 @@ MainApp::MainApp()
 		throw Utils::PongException("Failed to initialize GLFW");
 	}
 
-	window = std::make_shared<Window>(conf.GetWindowWidth(), conf.GetWindowHeight(), false, "Ping Pong");
+	window = std::make_shared<Window>(conf.GetWindowWidth(), conf.GetWindowHeight(), true, "Ping Pong");
 	if(!window)
 	{
 		throw Utils::PongException("Failed to create window - not enough memory");

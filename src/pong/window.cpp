@@ -2,18 +2,23 @@
 #include "utils/exceptions.h"
 #include "utils/log.h"
 
+#include <thread>
 namespace Pong
 {
 
-void WindowSizeCallback(GLFWwindow* window, int new_width, int new_height)
+bool Window::processEvent(GLFWwindow* _window, int _width, int _height)
 {
-	Window* wnd = static_cast<Window*>(glfwGetWindowUserPointer(window));
-	/* TODO: assert wnd != nullptr*/
-	glm::vec2 prev_size = wnd->GetSize();
-	
-	LOG_DEBUG("Window size changed: [prev %dx%d] [new %dx%d]", prev_size.x, prev_size.y, new_width, new_height);
+	if(_window != window)
+	{
+		return false;
+	}
 
-	wnd->SetSize({new_width, new_height});
+	LOG_DEBUG("Window size changed: [prev %dx%d] [new %dx%d]", width, height, _width, _height);
+
+	width = _width;
+	height = _height;
+
+	return false;
 }
 
 Window::Window(int width, int height, bool resizable, const std::string& title)
@@ -35,8 +40,13 @@ Window::Window(int width, int height, bool resizable, const std::string& title)
 
 	glfwMakeContextCurrent(window);
 
-	glfwSetWindowUserPointer(window, this);
-	glfwSetWindowSizeCallback(window, WindowSizeCallback);
+	events = std::make_shared<EventHandler>(window);
+	if(!events)
+	{
+		throw Utils::PongException("Failed to allocate events");
+	}
+
+	events->RegisterCallback(dynamic_cast<WindowSizeEvent*>(this));
 }
 
 Window::~Window()
@@ -58,6 +68,11 @@ void Window::SetSize(glm::vec2 size)
 Window::operator GLFWwindow*()
 {
 	return window;
+}
+
+EventHandler& Window::getEventHandler() const
+{
+	return *events;
 }
 
 } /* namespace Pong */
