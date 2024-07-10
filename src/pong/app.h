@@ -1,6 +1,7 @@
 #pragma once
 #include "config.h"
 #include "window.h"
+#include "renderer.h"
 
 #include <memory>
 
@@ -11,6 +12,8 @@ class MainApp
 {
 	Config conf;
 	std::shared_ptr<Window> window;
+	std::shared_ptr<Renderer> renderer;
+	glm::mat4 projection;
 
 public:
 	MainApp();

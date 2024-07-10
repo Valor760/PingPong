@@ -8,6 +8,7 @@ set(OUTPUT_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/build/$<1:lib>) # $<1:> to remove
 set(EXTERNAL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external)
 set(ASSETS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/assets)
 set(LIB_GLAD_PATH ${EXTERNAL_DIR}/glad/gl.c)
+set(SHADERS_PATH ${CMAKE_CURRENT_SOURCE_DIR}/shaders)
 
 # Defines
 set(WINDOWS_DEFINES "PONG_PLATFORM_WINDOWS" "_CRT_SECURE_NO_WARNINGS")
@@ -50,6 +51,7 @@ include_directories(${EXTERNAL_DIR}/glfw/include)
 include_directories(${EXTERNAL_DIR})
 include_directories(${EXTERNAL_DIR}/stb)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/shaders)
 
 # Libraries to link
 link_directories(${OUTPUT_LIB_DIR})

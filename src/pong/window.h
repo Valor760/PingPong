@@ -1,12 +1,12 @@
 #pragma once
 #include "events.h"
+#include "utils/math.h"
 
 #include <string>
 #include <memory>
 
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
-#include <glm/vec2.hpp>
 
 namespace Pong
 {

@@ -27,8 +27,10 @@ endif()
 target_link_libraries(${EXEC} PUBLIC ${OS_LIBS} ${COMMON_LIBS})
 
 # Copy assets to the binary directory
-# add_custom_command(
-# 		TARGET ${EXEC} POST_BUILD
-# 		COMMAND ${CMAKE_COMMAND} -E remove_directory ${BINARY_OUTPUT_DIR}/assets
-# 		COMMAND ${CMAKE_COMMAND} -E copy_directory ${ASSETS_PATH} ${BINARY_OUTPUT_DIR}/assets
-# )
+add_custom_command(
+		TARGET ${EXEC} PRE_BUILD
+		COMMAND python ${SHADERS_PATH}/combine_shaders.py
+			${SHADERS_PATH}
+			s_fragment=${SHADERS_PATH}/s_fragment.glsl
+			s_vertex=${SHADERS_PATH}/s_vertex.glsl
+)
