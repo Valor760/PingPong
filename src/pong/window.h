@@ -25,7 +25,7 @@ public:
 	glm::vec2 GetSize() const;
 	void SetSize(glm::vec2 size);
 
-	EventHandler& getEventHandler() const;
+	EventHandler& GetEventHandler() const;
 	bool processEvent(GLFWwindow* _window, int _width, int _height) override;
 
 	operator GLFWwindow*();

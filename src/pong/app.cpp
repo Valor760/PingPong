@@ -1,7 +1,7 @@
 #include "app.h"
 #include "utils/exceptions.h"
 #include "utils/log.h"
-#include "figures.h"
+#include "game.h"
 
 #include <chrono>
 
@@ -38,9 +38,8 @@ void MainApp::Run()
 {
 	auto prev_time = std::chrono::steady_clock::now();
 
-	Square sq({200, 200}, {400, 400}, *renderer);
-	Square sq2({50, 300}, {100, 10}, *renderer);
-	// Square sq2({0, 300}, {})
+	Game game(window->GetEventHandler(), *renderer);
+
 	while(!glfwWindowShouldClose(*window))
 	{
 		glfwPollEvents();
@@ -51,18 +50,12 @@ void MainApp::Run()
 
 		renderer->RenderBegin();
 
-		// /* First draw any GUI than game elements on top */
-		// /* In most cases this will draw a background while the game itself will draw its GUI */
+		/* First draw any GUI than game elements on top */
+		/* In most cases this will draw a background while the game itself will draw its GUI */
 		// Gui::LayoutManager::DrawLayout();
-		// if(m_CurrentGame)
-		// {
-		// 	const std::chrono::duration<double> delta_time = std::chrono::steady_clock::now() - prev_time;
-		// 	m_CurrentGame->OnUpdate(delta_time.count());
-		// }
-		// prev_time = std::chrono::steady_clock::now();
-
-		sq.Render();
-		sq2.Render();
+		const std::chrono::duration<double> delta_time = std::chrono::steady_clock::now() - prev_time;
+		game.OnUpdate(delta_time.count());
+		prev_time = std::chrono::steady_clock::now();
 
 		/* Render end */
 		renderer->RenderEnd();

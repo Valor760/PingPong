@@ -44,7 +44,12 @@ void Square::Render()
 	// glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform[LetterIdx::S]));
 	renderer.SetMat4f(position, "model");
 	glBindVertexArray(VAO[0]);
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, vertices.size() / 2);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, static_cast<GLuint>(vertices.size() / 2));
+}
+
+void Square::Adjust(glm::vec2 vec)
+{
+	position = glm::translate(position, glm::vec3(vec, 0.0f));
 }
 
 } /* namespace Pong */

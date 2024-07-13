@@ -70,7 +70,7 @@ Window::operator GLFWwindow*()
 	return window;
 }
 
-EventHandler& Window::getEventHandler() const
+EventHandler& Window::GetEventHandler() const
 {
 	return *events;
 }
