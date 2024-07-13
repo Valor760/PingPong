@@ -39,6 +39,8 @@ void MainApp::Run()
 	auto prev_time = std::chrono::steady_clock::now();
 
 	Square sq({200, 200}, {400, 400}, *renderer);
+	Square sq2({50, 300}, {100, 10}, *renderer);
+	// Square sq2({0, 300}, {})
 	while(!glfwWindowShouldClose(*window))
 	{
 		glfwPollEvents();
@@ -60,6 +62,7 @@ void MainApp::Run()
 		// prev_time = std::chrono::steady_clock::now();
 
 		sq.Render();
+		sq2.Render();
 
 		/* Render end */
 		renderer->RenderEnd();
