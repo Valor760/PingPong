@@ -20,12 +20,8 @@ void Game::OnUpdate(double dt)
 	player.OnUpdate(dt, paused);
 }
 
-bool Game::processEvent(GLFWwindow* window, int key, int scancode, int action, int mods)
+bool Game::processEvent([[maybe_unused]] GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods)
 {
-	(void) window;
-	(void) scancode;
-	(void) mods;
-
 	if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 	{
 		paused = !paused;

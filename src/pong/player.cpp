@@ -18,12 +18,8 @@ Player::Player(glm::vec2 size, glm::vec2 pos, Renderer& renderer, EventHandler& 
 	events.RegisterCallback(dynamic_cast<KeyEvent*>(this));
 }
 
-bool Player::processEvent(GLFWwindow* window, int key, int scancode, int action, int mods)
+bool Player::processEvent([[maybe_unused]] GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods)
 {
-	(void) window;
-	(void) scancode;
-	(void) mods;
-
 	std::lock_guard lg(eventLock);
 
 	if(key == GLFW_KEY_W || key == GLFW_KEY_UP)
