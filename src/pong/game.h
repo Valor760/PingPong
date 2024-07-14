@@ -3,18 +3,21 @@
 #include "events.h"
 #include "player.h"
 
+#include <memory>
+
 namespace Pong
 {
 
 class Game : public KeyEvent
 {
 	EventHandler& events;
+	glm::vec2& windowSize;
 	bool paused;
 	/* TODO: Make a pointer for easier restart implementation */
-	Player player;
+	std::shared_ptr<Player> player;
 
 public:
-	Game(EventHandler& hdl, Renderer& renderer);
+	Game(EventHandler& hdl, Renderer& renderer, glm::vec2& wnd_size);
 
 	void OnUpdate(double dt);
 

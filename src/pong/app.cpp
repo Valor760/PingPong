@@ -38,13 +38,14 @@ void MainApp::Run()
 {
 	auto prev_time = std::chrono::steady_clock::now();
 
-	Game game(window->GetEventHandler(), *renderer);
+	glm::vec2 wnd_size = window->GetSize();
+	Game game(window->GetEventHandler(), *renderer, wnd_size);
 
 	while(!glfwWindowShouldClose(*window))
 	{
 		glfwPollEvents();
 
-		glm::vec2 wnd_size = window->GetSize();
+		wnd_size = window->GetSize();
 		glViewport(0, 0, static_cast<int>(wnd_size.x), static_cast<int>(wnd_size.y));
 		projection = glm::ortho(0.0f, wnd_size.x, 0.f, wnd_size.y, 0.0f, -1.0f);
 

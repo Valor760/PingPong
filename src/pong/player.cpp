@@ -9,7 +9,7 @@ PlayerI::PlayerI(glm::vec2 size, glm::vec2 pos, Renderer& renderer)
 {
 }
 
-Player::Player(glm::vec2 size, glm::vec2 pos, Renderer& renderer, EventHandler& hdl)
+Player::Player(const glm::vec2& size, const glm::vec2& pos, Renderer& renderer, EventHandler& hdl)
 	: PlayerI(size, pos, renderer),
 	  events(hdl),
 	  upActive(false),
@@ -32,8 +32,6 @@ bool Player::processEvent([[maybe_unused]] GLFWwindow* window, int key, [[maybe_
 		{
 			upActive = false;
 		}
-
-		LOG_DEBUG("UP %s", upActive ? "pressed" : "released");
 	}
 
 	if(key == GLFW_KEY_S || key == GLFW_KEY_DOWN)
@@ -46,8 +44,6 @@ bool Player::processEvent([[maybe_unused]] GLFWwindow* window, int key, [[maybe_
 		{
 			downActive = false;
 		}
-
-		LOG_DEBUG("DOWN %s", downActive ? "pressed" : "released");
 	}
 
 	return false;

@@ -29,7 +29,7 @@ class Player : public PlayerI,
 	bool downActive;
 
 public:
-	Player(glm::vec2 size, glm::vec2 pos, Renderer& renderer, EventHandler& hdl);
+	Player(const glm::vec2& size, const glm::vec2& pos, Renderer& renderer, EventHandler& hdl);
 
 	void OnUpdate(double dt, bool paused) override;
 
