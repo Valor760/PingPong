@@ -1,5 +1,6 @@
 #include "player.h"
 #include "utils/log.h"
+#include "collision.h"
 
 namespace Pong
 {
@@ -12,6 +13,7 @@ PlayerI::PlayerI(glm::vec2 size, glm::vec2 pos, Renderer& renderer)
 Player::Player(const glm::vec2& size, const glm::vec2& pos, Renderer& renderer, EventHandler& hdl)
 	: PlayerI(size, pos, renderer),
 	  events(hdl),
+	  size(size),
 	  upActive(false),
 	  downActive(false)
 {
@@ -57,16 +59,22 @@ void Player::OnUpdate(double dt, bool paused)
 	{
 		if((upActive && !downActive) || (downActive && !upActive))
 		{
-			const float y_move = 300.0f * static_cast<float>(dt);
-			if(upActive)
-			{
-				platform.Adjust({0.0f, y_move});
-			}
+			float y_move = 300.0f * static_cast<float>(dt);
+			glm::vec2 curr_pos = platform.GetPosition();
+			glm::vec2 adjust = {0.0f, upActive ? y_move : -y_move};
+			
+			CalculateMaximumCollisionDistance(size, curr_pos, adjust);
+			platform.Adjust(adjust);
 
-			if(downActive)
-			{
-				platform.Adjust({0.0f, -y_move});
-			}
+			// if(upActive)
+			// {
+			// 	platform.Adjust(adjust);
+			// }
+
+			// if(downActive)
+			// {
+			// 	platform.Adjust({0.0f, -y_move});
+			// }
 		}
 	}
 

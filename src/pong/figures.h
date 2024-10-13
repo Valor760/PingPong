@@ -27,7 +27,7 @@ class Square : public Figure
 	// glm::vec2 topLeft;
 	// glm::vec2 botRight;
 	Renderer& renderer;
-	glm::mat4 position;
+	glm::vec2 position;
 
 	void GenerateBuffers() override;
 
@@ -38,6 +38,7 @@ public:
 
 	void Render() override;
 	void Adjust(glm::vec2 vec);
+	glm::vec2 GetPosition() const;
 };
 
 } /* namespace Pong */

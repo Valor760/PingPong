@@ -1,6 +1,7 @@
 #include "game.h"
 #include "utils/log.h"
 #include "utils/exceptions.h"
+#include "collision.h"
 
 namespace Pong
 {
@@ -12,6 +13,12 @@ Game::Game(EventHandler& hdl, Renderer& renderer, glm::vec2& wnd_size)
 	  windowSize(wnd_size),
 	  paused(false)
 {
+	/* TODO: What if game "lags" and it will jump over 10.0f? */
+	CollisionObj topBorder({0.0f, windowSize.y}, {windowSize.x, 10.0f});
+	CollisionObj botBorder({0.0f, -10.0f}, {windowSize.x, 10.0f});
+	AddCollisionObject(topBorder);
+	AddCollisionObject(botBorder);
+
 	glm::vec2 player_pos = {windowSize.x - PLATFORM_SIZE.x, (windowSize.y - PLATFORM_SIZE.y) / 2};
 	player = std::make_shared<Player>(PLATFORM_SIZE, player_pos, renderer, events);
 	if(!player)

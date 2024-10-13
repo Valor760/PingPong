@@ -23,6 +23,7 @@ class Player : public PlayerI,
 			   public KeyEvent
 {
 	EventHandler& events;
+	glm::vec2 size;
 
 	std::mutex eventLock;
 	bool upActive;
