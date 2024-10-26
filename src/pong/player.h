@@ -14,9 +14,9 @@ protected:
 	Square platform;
 
 public:
-	PlayerI(glm::vec2 size, glm::vec2 pos, Renderer& renderer);
+	PlayerI(const glm::vec2& size, const glm::vec2& pos);
 
-	virtual void OnUpdate(double dt, bool paused) = 0;
+	virtual void OnUpdate(double dt) = 0;
 };
 
 class Player : public PlayerI,
@@ -30,9 +30,10 @@ class Player : public PlayerI,
 	bool downActive;
 
 public:
-	Player(const glm::vec2& size, const glm::vec2& pos, Renderer& renderer, EventHandler& hdl);
+	Player(const glm::vec2& size, const glm::vec2& pos, EventHandler& hdl);
 
-	void OnUpdate(double dt, bool paused) override;
+	void OnUpdate(double dt) override;
+	void OnRender(Renderer& renderer);
 
 	bool processEvent(GLFWwindow* window, int key, int scancode, int action, int mods);
 };

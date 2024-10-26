@@ -8,17 +8,18 @@
 namespace Pong
 {
 
-class MainApp
+class MainApp : public WindowSizeEvent
 {
 	Config conf;
 	std::shared_ptr<Window> window;
 	std::shared_ptr<Renderer> renderer;
-	glm::mat4 projection;
 
 public:
 	MainApp();
 
 	void Run();
+
+	bool processEvent(GLFWwindow* window, int width, int height);
 };
 
 } /* namespace Pong */

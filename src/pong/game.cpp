@@ -8,32 +8,39 @@ namespace Pong
 
 constexpr glm::vec2 PLATFORM_SIZE = {15.0f, 100.0f};
 
-Game::Game(EventHandler& hdl, Renderer& renderer, glm::vec2& wnd_size)
-	: events(hdl),
-	  windowSize(wnd_size),
+Game::Game(Renderer& renderer, Window& window)
+	: events(window.GetEventHandler()),
+	  renderer(renderer),
+	  window(window),
 	  paused(false)
 {
-	/* TODO: What if game "lags" and it will jump over 10.0f? */
-	CollisionObj topBorder({0.0f, windowSize.y}, {windowSize.x, 10.0f});
-	CollisionObj botBorder({0.0f, -10.0f}, {windowSize.x, 10.0f});
-	AddCollisionObject(topBorder);
-	AddCollisionObject(botBorder);
-
-	glm::vec2 player_pos = {windowSize.x - PLATFORM_SIZE.x, (windowSize.y - PLATFORM_SIZE.y) / 2};
-	player = std::make_shared<Player>(PLATFORM_SIZE, player_pos, renderer, events);
+	const glm::vec2& window_size = window.GetSize();
+	glm::vec2 player_spawn_pos = {window_size.x - PLATFORM_SIZE.x, (window_size.y - PLATFORM_SIZE.y) / 2};
+	player = std::make_shared<Player>(PLATFORM_SIZE, player_spawn_pos, events);
 	if(!player)
 	{
 		throw Utils::PongException("Failed to create player - out of memory");
 	}
 
-	hdl.RegisterCallback(dynamic_cast<KeyEvent*>(this));
+	events.RegisterCallback(dynamic_cast<KeyEvent*>(this));
 }
 
 void Game::OnUpdate(double dt)
 {
+	if(!paused)
+	{
+		if(player)
+		{
+			player->OnUpdate(dt);
+		}
+	}
+}
+
+void Game::OnRender()
+{
 	if(player)
 	{
-		player->OnUpdate(dt, paused);
+		player->OnRender(renderer);
 	}
 }
 

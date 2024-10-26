@@ -27,27 +27,27 @@ MainApp::MainApp()
 		throw Utils::PongException("Can't initialize GLAD");
 	}
 
+	const glm::vec2& wnd_size = window->GetSize();
+	glm::mat4 projection = glm::ortho(0.0f, wnd_size.x, 0.f, wnd_size.y, 0.0f, -1.0f);
+
 	renderer = std::make_shared<Renderer>(projection);
 	if(!renderer)
 	{
 		throw Utils::PongException("Failed to create rederer - not enough memory");
 	}
+
+	glViewport(0, 0, static_cast<int>(wnd_size.x), static_cast<int>(wnd_size.y));
 }
 
 void MainApp::Run()
 {
 	auto prev_time = std::chrono::steady_clock::now();
 
-	glm::vec2 wnd_size = window->GetSize();
-	Game game(window->GetEventHandler(), *renderer, wnd_size);
+	Game game(*renderer, *window);
 
 	while(!glfwWindowShouldClose(*window))
 	{
 		glfwPollEvents();
-
-		wnd_size = window->GetSize();
-		glViewport(0, 0, static_cast<int>(wnd_size.x), static_cast<int>(wnd_size.y));
-		projection = glm::ortho(0.0f, wnd_size.x, 0.f, wnd_size.y, 0.0f, -1.0f);
 
 		renderer->RenderBegin();
 
@@ -56,12 +56,21 @@ void MainApp::Run()
 		// Gui::LayoutManager::DrawLayout();
 		const std::chrono::duration<double> delta_time = std::chrono::steady_clock::now() - prev_time;
 		game.OnUpdate(delta_time.count());
+		game.OnRender();
 		prev_time = std::chrono::steady_clock::now();
 
 		/* Render end */
 		renderer->RenderEnd();
 		glfwSwapBuffers(*window);
 	}
+}
+
+bool MainApp::processEvent([[maybe_unused]] GLFWwindow* window, int width, int height)
+{
+	glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(width), 0.f, static_cast<float>(height), 0.0f, -1.0f);
+	renderer->SetProjection(projection);
+
+	return false;
 }
 
 } /* namespace Pong */

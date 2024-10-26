@@ -11,9 +11,8 @@ namespace Pong
 // 	vertices = {200, 200, 600, 400, 200, 400, 400, 200};
 // }
 
-Square::Square(glm::vec2 size, glm::vec2 pos, Renderer& renderer)
-	: renderer(renderer),
-	  position(pos)
+Square::Square(const glm::vec2& size, const glm::vec2& pos)
+	: position(pos)
 {
 	vertices = {
 		0.0f,   size.y,
@@ -37,7 +36,7 @@ void Square::GenerateBuffers()
 	glEnableVertexAttribArray(0);
 }
 
-void Square::Render()
+void Square::OnRender(Renderer& renderer)
 {
 	glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(position, 0.0f));
 	renderer.SetMat4f(model, "model");
@@ -45,7 +44,7 @@ void Square::Render()
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, static_cast<GLuint>(vertices.size() / 2));
 }
 
-void Square::Adjust(glm::vec2 vec)
+void Square::Adjust(const glm::vec2& vec)
 {
 	position += vec;
 }

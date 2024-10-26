@@ -5,7 +5,7 @@
 namespace Pong
 {
 
-Renderer::Renderer(glm::mat4& projection)
+Renderer::Renderer(const glm::mat4& projection)
 	: projection(projection)
 {
 	program = glCreateProgram();
@@ -87,6 +87,11 @@ void Renderer::SetMat4f(glm::mat4 mat, const char* name)
 	PONG_ASSERT(name != nullptr);
 	GLuint location = glGetUniformLocation(program, name);
 	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(mat));
+}
+
+void Renderer::SetProjection(const glm::mat4& new_proj)
+{
+	projection = new_proj;
 }
 
 } /* namespace Pong */
